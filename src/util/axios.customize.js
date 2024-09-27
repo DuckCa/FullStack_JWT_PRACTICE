@@ -4,11 +4,15 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
-// instance.defaults.headers.common["Authorization"]=;
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
+    instance.defaults.headers.common["Authorization"] =
+      localStorage.getItem("access_token");
     // Do something before request is sent
+    config.headers.Authorization = `Bearer ${localStorage.getItem(
+      "access_token"
+    )}`;
     return config;
   },
   function (error) {
